@@ -9,12 +9,12 @@ const mysql = require('mysql');
 //};
 
 //リリース用
-const dbConfig = {
-	host: 'us-cdbr-east-02.cleardb.com',
-	user: 'bccf75a04cb346',
-	password: 'ec69b6c5',
-	database: 'heroku_f9905df8249fe44'
-};
+	const dbConfig = {
+		host: 'us-cdbr-east-02.cleardb.com',
+		user: 'bccf75a04cb346',
+		password: 'ec69b6c5',
+		database: 'heroku_f9905df8249fe44'
+	};
 
 const connection = mysql.createConnection(dbConfig);
 

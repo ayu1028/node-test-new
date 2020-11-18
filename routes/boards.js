@@ -29,22 +29,28 @@ router.get('/:board_id', (req, res, next) => {
 });
 
 router.post('/:board_id', upload.single('image_file'), (req, res, next) => {
-	console.log(req.file.path);
-	const path = req.file.path;
+	const path = req.file ? req.file.path : 0;
 	const message = req.body.message;
 	const userId = req.session.user_id ? req.session.user_id : 0;
 	const boardId = req.params.board_id;
 	const createdAt = moment().format('YYYY-MM-DD HH:mm:ss');
 
-	cloudinary.uploader.upload(path, (error, result) => {
-		const imagePath = result.url;
-		const query = 'INSERT INTO messages (message, board_id, user_id, created_at, image_path) VALUES (?)';
-		const values = [[message, boardId, userId, createdAt, imagePath]];
-		connection.query(query, values, (err, rows) => {
-			res.redirect(`/boards/${boardId}`);
+	if(path){
+		cloudinary.uploader.upload(path, (error, result) => {
+			const imagePath = result.url;
+			const query = 'INSERT INTO messages (message, board_id, user_id, created_at, image_path) VALUES (?)';
+			const values = [[message, boardId, userId, createdAt, imagePath]];
+			connection.query(query, values, (err, rows) => {
+				res.redirect(`/boards/${boardId}`);
+			});
 		});
-	});
-
+	} else {
+			const query = 'INSERT INTO messages (message, board_id, user_id, created_at) VALUES (?)';
+			const values = [[message, boardId, userId, createdAt]];
+			connection.query(query, values, (err, rows) => {
+				res.redirect(`/boards/${boardId}`);
+			});
+	}
 });
 
 module.exports = router;
