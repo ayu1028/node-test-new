@@ -9,7 +9,7 @@ const mysql = require('mysql');
 //	database: process.env.MYSQL_DB
 //};
 
-console.log(dbConfig);
+//console.log(dbConfig);
 
 //リリース用
 const dbConfig = {
