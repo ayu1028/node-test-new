@@ -6,10 +6,12 @@ const cloudinary = require('cloudinary').v2;
 const connection = require('../mysqlConnection');
 const upload = multer({ dest: './public/images/uploads/'});
 
+require('dotenv').config();
+
 cloudinary.config({
-	cloud_name: 'dtmue1o4b',
-	api_key: '792592538232137',
-	api_secret: 'Kxe-4fPV0fR6S9ZqHIPccb5Lkug'
+	cloud_name: process.env.NAME,
+	api_key: process.env.KEY,
+	api_secret: process.env.SECRET_KEY
 });
 
 router.get('/:board_id', (req, res, next) => {
